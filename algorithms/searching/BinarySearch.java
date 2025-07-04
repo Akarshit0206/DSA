@@ -16,10 +16,4 @@ class Solution {
     return -1;
   }
 
-  public static void main(String[] args) {
-    Solution sol = new Solution();
-    int[] arr = { 1, 3, 5, 7, 9 };
-    System.out.println(sol.binarySearch(arr, 9));
-  }
-
 }

@@ -4,9 +4,9 @@ import java.util.Objects;
 public class SinglyLinkedList<T> {
   private Node head;
   private Node tail;
-  private int size;
+  private int size = 0;
 
-  SinglyLinkedList() {
+  public SinglyLinkedList() {
     size = 0;
   }
 
@@ -15,11 +15,10 @@ public class SinglyLinkedList<T> {
     node.next = head;
     head = node;
 
-    if (tail == null) {
+    if (tail == null)
       tail = head;
-    }
     size++;
-  }
+  };
 
   public void addLast(T val) {
     if (tail == null) {
@@ -33,15 +32,14 @@ public class SinglyLinkedList<T> {
   }
 
   public void addAt(int index, T val) {
-    if (index > size || index < 0) {
-      throw new IndexOutOfBoundsException("Invalid Index !!");
-    }
-    if (size == index) {
-      addLast(val);
-      return;
-    }
+    if (index > size || index < 0)
+      throw new IndexOutOfBoundsException("Invalid Index!!");
     if (index == 0) {
       addFirst(val);
+      return;
+    }
+    if (index == size) {
+      addLast(val);
       return;
     }
     Node temp = head;
@@ -55,55 +53,52 @@ public class SinglyLinkedList<T> {
 
   public T removeFirst() {
     if (head == null) {
-      throw new NoSuchElementException("List is Empty");
+      throw new NoSuchElementException("List is empty!!");
     }
     T removed = head.val;
     head = head.next;
-    if (head == null)
-      tail = null;
-
+    if (head == null) {
+      tail = head;
+    }
     size--;
     return removed;
   }
 
   public T removeLast() {
-    if (size <= 1)
+    if (size <= 1) {
       return removeFirst();
-
+    }
     T removed = tail.val;
     Node secondLastNode = get(size - 2);
     tail = secondLastNode;
     tail.next = null;
     size--;
     return removed;
-
   }
 
   public T removeAt(int index) {
-    if (index < 0 || index >= size)
-      throw new IndexOutOfBoundsException("Invalid index");
-
+    if (index < 0 || index >= size) {
+      throw new IndexOutOfBoundsException();
+    }
     if (index == 0)
       return removeFirst();
-
     if (index == size - 1)
       return removeLast();
     Node prev = get(index - 1);
-    Node todelete = prev.next;
-    T removed = todelete.val;
-    prev.next = todelete.next;
-    todelete.next = null;
+    Node toDelete = prev.next;
+    T removed = toDelete.val;
+    prev.next = toDelete.next;
+    toDelete.next = null;
     size--;
     return removed;
 
   }
 
-  public Node find(T value) {
+  public Node find(T val) {
     Node node = head;
     while (node != null) {
-      if (Objects.equals(node.val, value)) {
+      if (Objects.equals(node.val, val))
         return node;
-      }
       node = node.next;
     }
     return null;
@@ -113,12 +108,27 @@ public class SinglyLinkedList<T> {
     return size;
   }
 
+  public T getFirst() {
+
+    return head.val;
+  }
+
+  public T getLast() {
+    return tail.val;
+  }
+
   public boolean contains(T val) {
     return find(val) != null;
   }
 
-  public boolean isEmpty() {
-    return size == 0;
+  public Node get(int index) {
+    if (index >= size || index < 0)
+      throw new IndexOutOfBoundsException("Invalid index!!");
+    Node node = head;
+    for (int i = 0; i < index; ++i) {
+      node = node.next;
+    }
+    return node;
   }
 
   public void clear() {
@@ -127,31 +137,15 @@ public class SinglyLinkedList<T> {
     size = 0;
   }
 
-  public T getFirst() {
-    if (head == null)
-      throw new NoSuchElementException("List is Empty !!!");
-    return head.val;
+  public boolean isEmpty() {
+    return size == 0;
   }
 
-  public T getLast() {
-    if (tail == null)
-      throw new NoSuchElementException("List is Empty !!!");
-    return tail.val;
-  }
-
-  public Node get(int index) {
-    if (index < 0 || index >= size)
-      throw new IndexOutOfBoundsException();
-    Node node = head;
-    for (int i = 0; i < index; i++) {
-      node = node.next;
-    }
-    return node;
-  }
-
-  public void show() {
+  public void display() {
+    if (size == 0)
+      System.out.println("List is Empty!!");
+    System.out.print("[ ");
     Node temp = head;
-    System.out.print("[");
     while (temp != null) {
       System.out.print(temp.val);
       temp = temp.next;
@@ -160,10 +154,10 @@ public class SinglyLinkedList<T> {
       }
     }
     System.out.println("]");
+
   }
 
   class Node {
-
     private T val;
     private Node next;
 
@@ -171,30 +165,10 @@ public class SinglyLinkedList<T> {
       this.val = val;
     }
 
-    Node(T val, Node node) {
+    Node(T val, Node next) {
       this.val = val;
-      this.next = node;
+      this.next = next;
     }
   }
 
-  public static void main(String[] args) {
-
-    SinglyLinkedList<Integer> li = new SinglyLinkedList<>();
-
-    System.out.println(li.contains(10));
-    li.addLast(50);
-    li.addLast(100);
-    li.addFirst(600);
-    li.addAt(1, 75);
-    li.addAt(0, 25);
-    li.addAt(5, 1000);
-    li.show();
-    li.removeAt(3);
-    li.addLast(null);
-    System.out.println(li.removeAt(0));
-    System.out.println(li.find(null));
-    li.show();
-    li.size();
-
-  }
 }
