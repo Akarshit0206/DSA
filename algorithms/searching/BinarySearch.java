@@ -1,3 +1,4 @@
+
 class Solution {
   public int binarySearch(int[] haystack, int needle) {
     int low = 0;
