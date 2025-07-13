@@ -1,4 +1,4 @@
-// Question Link: https://leetcode.com/problems/split-array-largest-sum/
+//Question Link:  https://leetcode.com/problems/koko-eating-bananas/
 
 class Solution {
   public static int min(int n1, int n2) {
