@@ -1,23 +1,22 @@
 //Question Link: https://leetcode.com/problems/missing-number/
 
-import java.util.HashMap;
-import java.util.Map;
-
 class Solution {
   public int missingNumber(int[] nums) {
-    HashMap<Integer, Integer> hash = new HashMap<>();
-    int res = 0;
-    for (int i = 0; i <= nums.length; i++)
-      hash.put(i, 0);
-    for (int ele : nums) {
-      hash.put(ele, 1);
-    }
-    for (Map.Entry<Integer, Integer> e : hash.entrySet()) {
-      if (e.getValue() == 0) {
-        res = e.getKey();
-        break;
+    int i = 0;
+    while (i < nums.length) {
+      int correctIndex = nums[i];
+      if (nums[i] < nums.length && nums[i] != nums[correctIndex]) {
+        int temp = nums[i];
+        nums[i] = nums[correctIndex];
+        nums[correctIndex] = temp;
+      } else {
+        i++;
       }
     }
-    return res;
+    for (int j = 0; j < nums.length; j++) {
+      if (nums[j] != j)
+        return j;
+    }
+    return nums.length;
   }
 }
