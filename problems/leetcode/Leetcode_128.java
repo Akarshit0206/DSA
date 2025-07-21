@@ -1,28 +1,23 @@
 //Question Link: https://leetcode.com/problems/longest-consecutive-sequence/
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
 
 class Solution {
   public int longestConsecutive(int[] nums) {
     if (nums.length == 0)
       return 0;
-    HashMap<Integer, Integer> hash = new HashMap<>();
+    HashSet<Integer> set = new HashSet<>();
     int maxCount = 1;
     for (int ele : nums) {
-      hash.put(ele, 1);
+      set.add(ele);
     }
-    for (Map.Entry<Integer, Integer> e : hash.entrySet()) {
-      int key = e.getKey();
-      if (hash.get(key - 1) != null) {
+    for (int i : set) {
+      if (set.contains(i - 1))
         continue;
-      }
-      int next = key + 1;
       int count = 1;
-      while (hash.get(next) != null) {
+      while (set.contains(i + 1)) {
         count++;
-        next++;
-
+        i++;
       }
       if (count > maxCount)
         maxCount = count;
