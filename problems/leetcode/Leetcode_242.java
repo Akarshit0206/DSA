@@ -6,26 +6,31 @@ class Solution {
   public boolean isAnagram(String s, String t) {
     if (s.length() != t.length())
       return false;
-    HashMap<Character, Integer> hashS = new HashMap<>();
-    HashMap<Character, Integer> hashT = new HashMap<>();
+    HashMap<Character, Integer> charCount = new HashMap<>();
     for (int i = 0; i < s.length(); i++) {
-      char ch = s.charAt(i);
-      if (hashS.get(ch) == null) {
-        hashS.put(ch, 1);
-        continue;
+      char characterOfS = s.charAt(i);
+      char characterOfT = t.charAt(i);
+      boolean wasNullS = false;
+      boolean wasNullT = false;
+      if (charCount.get(characterOfS) == null) {
+        charCount.put(characterOfS, 1);
+        wasNullS = true;
       }
-      int count = hashS.get(ch);
-      hashS.put(ch, ++count);
-    }
-    for (int i = 0; i < t.length(); i++) {
-      char ch = t.charAt(i);
-      if (hashT.get(ch) == null) {
-        hashT.put(ch, 1);
-        continue;
+      if (charCount.get(characterOfT) == null) {
+        charCount.put(characterOfT, -1);
+        wasNullT = true;
       }
-      int count = hashT.get(ch);
-      hashT.put(ch, ++count);
+      if (!wasNullS)
+        charCount.put(characterOfS, charCount.get(characterOfS) + 1);
+      if (!wasNullT)
+        charCount.put(characterOfT, charCount.get(characterOfT) - 1);
     }
-    return hashS.equals(hashT);
+    System.out.println(charCount);
+    for (int count : charCount.values()) {
+      if (count != 0)
+        return false;
+    }
+
+    return true;
   }
 }
