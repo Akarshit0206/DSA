@@ -3,35 +3,29 @@
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 
 class Solution {
-  public static boolean isAnagram(String st1, String st2) {
-    if (st1.length() != st2.length())
-      return false;
-    char[] arrayOfSt1 = st1.toCharArray();
-    char[] arrayOfSt2 = st2.toCharArray();
-    Arrays.sort(arrayOfSt1);
-    Arrays.sort(arrayOfSt2);
-    return Arrays.equals(arrayOfSt1, arrayOfSt2);
-  }
-
   public List<List<String>> groupAnagrams(String[] strs) {
-
+    HashMap<String, List<String>> hash = new HashMap<>();
     List<List<String>> res = new ArrayList<>();
-    List<Integer> addedIndex = new ArrayList<>();
     for (int i = 0; i < strs.length; i++) {
-      if (addedIndex.contains(i))
-        continue;
-      List<String> internalList = new ArrayList<>();
-      String st = strs[i];
-      for (int j = i + 1; j < strs.length; j++) {
-        if (isAnagram(st, strs[j])) {
-          internalList.add(strs[j]);
-          addedIndex.add(j);
-        }
+      int[] count = new int[26];
+      List<String> li = new ArrayList<>();
+      for (int j = 0; j < strs[i].length(); j++) {
+        count[strs[i].codePointAt(j) - 97] += 1;
       }
-      internalList.add(st);
-      res.add(internalList);
+      String countString = Arrays.toString(count);
+
+      if (hash.get(countString) == null) {
+        li.add(strs[i]);
+        hash.put(countString, li);
+        continue;
+      }
+      hash.get(countString).add(strs[i]);
+    }
+    for (List<String> li : hash.values()) {
+      res.add(li);
     }
     return res;
   }
