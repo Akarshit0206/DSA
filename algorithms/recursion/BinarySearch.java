@@ -14,8 +14,8 @@ class BinarySearch {
   }
 
   public static void main(String[] args) {
-    int[] arr = { 0, 1, 2, 3, 4, 5 };
-    int target = 6;
+    int[] arr = { -1, 0, 3, 5, 9, 12 };
+    int target = 9;
     System.out.println(binarySearch(arr, target, 0, arr.length - 1));
   }
 }
