@@ -10,9 +10,10 @@ class Solution {
     int length = 0;
     for (int i = 0; i < s.length(); i++) {
       char ch = s.charAt(i);
-      if (li.contains(ch)) {
-        li.remove(0);
-        length--;
+      int charIndex = li.indexOf(ch);
+      if (charIndex != -1) {
+        li.subList(0, charIndex + 1).clear();
+        length -= charIndex + 1;
       }
       li.add(ch);
       length++;
