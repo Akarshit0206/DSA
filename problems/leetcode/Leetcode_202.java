@@ -1,5 +1,7 @@
 //Question Link: https://leetcode.com/problems/happy-number/description/
 
+import java.util.HashSet;
+
 class Solution {
   public int sqSumOfDigits(int n) {
     int sum = 0;
@@ -17,11 +19,7 @@ class Solution {
       return true;
     HashSet<Integer> set = new HashSet<>();
     set.add(res);
-    res = sqSumOfDigits(res);
-    if (res == 1)
-      return true;
-    set.add(res);
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i <= n / 2; i++) {
       int next = sqSumOfDigits(res);
       if (set.contains(next))
         return false;
