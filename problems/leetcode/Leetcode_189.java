@@ -1,15 +1,29 @@
 //Question Link: https://leetcode.com/problems/rotate-array/
 
 class Solution {
+  public void reverse(int[] arr, int start, int end) {
+    while (start < end) {
+      int temp = arr[start];
+      arr[start] = arr[end];
+      arr[end] = temp;
+      start++;
+      end--;
+    }
+
+  }
+
   public void rotate(int[] nums, int k) {
+
     int n = nums.length;
     k = k % n;
-    for (int j = 1; j <= k; j++) {
-      int item = nums[n - 1];
-      for (int i = n - 2; i >= 0; i--) {
-        nums[i + 1] = nums[i];
-      }
-      nums[0] = item;
-    }
+
+    // Reverse starting (n-k) elements
+    reverse(nums, 0, n - k - 1);
+
+    // Reverse last (k) elements
+    reverse(nums, n - k, n - 1);
+
+    // Reverse whole arrar
+    reverse(nums, 0, n - 1);
   }
 }
